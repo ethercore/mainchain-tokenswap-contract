@@ -1,4 +1,4 @@
-pragma solidity >= 0.5.0 < 0.7.0;
+pragma solidity 0.4.26;
 
 /**
  * @dev Interface of the ERC20 standard as defined in the EIP.
@@ -98,6 +98,13 @@ contract TokenSwap {
 
     uint256 amount = IERC20(tokenAddress).balanceOf(address(this));
     IERC20(tokenAddress).transfer(msg.sender, amount);
+  }
+
+  function withdrawNative() public {
+    require(msg.sender == owner);
+
+    uint256 amount = address(this).balance;
+    msg.sender.transfer(amount);
   }
 
   function changeOwner(address _owner) public {
